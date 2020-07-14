@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Box</title>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
+</head>
+<body class="sans-serif">  
+    <nav class="flex justify-end bw3 ba">
+        <div class="flex-grow pa3 flex items-center">
+            {% if user.is_authenticated %}
+            <p class="mr4 serif i green">You are logged in as {{ user.username }}</p>
+            <a class="f6 link dib green dim mr3 mr4-ns" href={% url 'auth_logout' %}>Log Out</a>
+            {% else %}
+            <a class="f6 link dib green dim mr3 mr4-ns" href={% url 'auth_login' %}>Log In</a>
+            <a class="f6 dib green bg-animate  hover-black no-underline pv2 ph4 br-pill ba b--white-20" href={% url 'registration_register' %}>Register</a>
+            {% endif %}
+        </div>
+    </nav>
+</body>
+</html>

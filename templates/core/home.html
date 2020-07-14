@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div>
+    <h1>'Question Box'</h1>
+    <p> <a href="{% url 'auth_login' %}">You may log-in here</a> or <a href="{% url 'registration_register' %}">Sign-up here</a>.</p>
+  </div>
+{% endblock %}
