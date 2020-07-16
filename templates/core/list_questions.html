@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="green">
+  <h1>All Questions</h1>
+</div>
+
+<p><a href="{% url 'add_question' %}">Add New Question</a></p>
+<p><a href="{% url 'profile' %}">Profile Page</a></p>
+
+<div class="flex flex-wrap">
+  {% for question in questions %}
+  {% include "core/question_partial.html" with question=question %}
+  <li>
+    <a href="{% url 'question_detail' question_pk=recipe.pk %}">{{ question.title }}</a> (by {{ question.user }}) {% if not question.public %}<b>private</b>{% endif %}
+    -- starred {{ question.times_starred }} time{{ question.times_starred|pluralize }}
+  </li>
+  {% endfor %}
+</div>
+<br><a class="red" href="{% url 'list_questions' %}">Questions List</a><br>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="w-40 pa3 b--green b--dashed">
+  <h2>{{ question.title }}
+    <a id="toggle-starred" data-question-id="{{ question.pk }}" class="no-underline pointer dib grow">
+      {% if is_user_starred %}
+        &#9733;
+      {% else %}
+        &#9734;
+      {% endif %}
+      </a>
+  </h2>
+
+  {% if question.body %}
+  <div class="flex">
+    <div class="pr2"><i class="snip"></i></div>
+    <div>{{ question.body }}</div>
+  </div>
+  {% endif %}
+
+  {% if question.date_added %}
+  <div class="flex">
+    <div class="pr2"><i class="snip"></i></div>
+    <div>{{ question.date_added }}</div>
+  </div>
+  {% endif %}
+
+  {% if question.user %}
+  <div class="flex">
+    <div class="pr2"><i class="snip"></i></div>
+    <div>{{ question.user }}</div>
+  </div>
+  {% endif %}
+
+
+
+  <p>
+    <a class="red" href="{% url 'list_questions' %}">Questions List</a><br>
+    {% if user == question.user %}
+    <a class="red" href="{% url 'delete_question' pk=question.pk %}">Delete Question</a>
+    {% endif %}
+  </p>
+</div>
+
+<script>
+  const toggleStarredLink = document.querySelector("#toggle-starred")
+  toggleStarredLink.addEventListener('click', function (e) {
+    e.preventDefault()
+    const questionId = toggleStarredLink.dataset['questionId']
+    fetch(`/questions/${questionId}/Starred/`, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.starred) {
+        toggleStarredLink.innerHTML = '&#9733;'
+      } else {
+        toggleStarredLink.innerHTML = '&#9734;'
+      }
+    })
+
+  })
+</script>
+{% endblock %}

@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
+from core import views as core_views
+
 
 urlpatterns = [
+    path('', core_views.home, name="home"),
+    path('core/', core_views.list_questions, name='list_questions'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('registration.backends.simple.urls')),
+    path('core/add/', core_views.add_question, name='add_question'),
+    path('accounts/profile/', core_views.profile, name='profile'),
+    path('core/<int:pk>/', core_views.show_question, name='show_question'),
+    path('core/<int:question_pk>/starred/', core_views.toggle_starred_questions, name="toggle_starred_questions"),
 ]
 
 if settings.DEBUG:

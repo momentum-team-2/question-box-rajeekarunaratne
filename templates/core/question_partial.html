@@ -1,0 +1,39 @@
+{% block content %}
+
+<div class="w-26 pa3 b--green b--dashed bg-washed-green ma1">
+    <a href="{% url 'show_question' pk=question.pk %}">
+      <h2>{{ question.title }}</h2>
+    </a>
+
+    {% if question.body %}
+    <div class="flex">
+      <div class="pr2"><i class="snip"></i></div>
+      <div>{{ question.body }}</div>
+    </div>
+    {% endif %}
+
+    {% if question.date_added %}
+    <div class="flex">
+      <div class="pr2"><i class="snip"></i></div>
+      <div>{{ question.date_added }}</div>
+    </div>
+    {% endif %}
+
+    {% if question.user %}
+    <div class="flex">
+      <div class="pr2"><i class="snip"></i></div>
+      <div>{{ question.user }}</div>
+    </div>
+    {% endif %}
+
+    {% if user == question.user %}
+    <p>
+      <a class="red" href="{% url 'delete_question' pk=question.pk %}">Delete Question</a>
+    </p>
+    {% endif %}
+
+    
+
+  </div>
+
+{% endblock %}
