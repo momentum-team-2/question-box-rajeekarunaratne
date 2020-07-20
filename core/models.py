@@ -18,7 +18,7 @@ class Answer(models.Model):
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
     starred_by = models.ManyToManyField(User, related_name="starred_answers", blank=True)
-    accepted = models.BooleanField(default=False)
+    accepted = models.BooleanField(User, default=False)
 
 def get_available_questions_for_user(queryset, user):
     if user.is_authenticated:

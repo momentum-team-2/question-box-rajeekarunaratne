@@ -1,12 +1,18 @@
 {% extends "base.html" %}
-{% load static %}
+<!-- {% load static %}
 {% block scripts %}
   <script src="{% static 'js/question.js' %}"></script>
-{% endblock %}
+{% endblock %} -->
 
 {% block content %}
-<br>
-<div class="w-40 pa3 b--green b--dashed">
+<div>
+  <br>  
+  <br>
+  <br>
+  <br> 
+</div>
+
+<div class="w-40 pa3 b--light-purple b--dashed">
   <h2>{{ question.title }}
     <a id="toggle-starred" data-question-id="{{ question.pk }}" class="no-underline pointer dib grow">
       {% if user_favorite %}
@@ -41,7 +47,7 @@
   <ul style='list-style-type: none'>
     {% for answer in answers %}
     <li>{{ answer.body }}
-    <a data-answer-id="{{ answer.pk }}" class="no-underline pointer dib grow">
+    <a data-answerid="{{ answer.pk }}" class="no-underline pointer dib grow toggler">
       {% if user.is_starred_answers %}
         &#9733;
       {% else %}
@@ -49,9 +55,9 @@
       {% endif %}
       </a>
     <br>Posted by: {{ answer.author }} </li>
-    <a class="red" href="{% url 'accept_answer' answer_pk=answer.pk %}">Accepted Answer</a>
+    <a class="red" href="{% url 'accept_answer' answer_pk=answer.pk %}">Accepted Answer?</a>
     {% if answer.accepted %}
-    <strong>Accepted</strong>
+    <strong>Yes</strong>
     {% endif %}
     {% endfor %}
     <br><a style="text-decoration:none" class="btn btn-outline-light mt-2 mt2 mb0 f6 fw4 ttu tracked" href="{% url 'add_answer' pk=question.pk%}">add answer</a>
@@ -86,12 +92,13 @@
   })
 
 
-  const toggleStarredLinks = document.querySelectorAll("[data-answer-id]")
-  for (i = 0; i < toggleStarredLinks.length; i++) {
-    link = toggleStarredLinks[i];
+  const toggleStarredLinks = document.querySelectorAll(".toggler")
+  for (let link of toggleStarredLinks) {
+    console.log(link)
+    console.log(link.dataset.answerid)
     link.addEventListener('click', function (e) {
       e.preventDefault()
-      let answerId = link.dataset['answerId']
+      const answerId = link.dataset.answerid
       console.log(answerId)
       fetch(`/answers/${answerId}/starred/`, {
         method: 'POST'
