@@ -1,5 +1,7 @@
 from django import forms
 from .models import Question, Answer
+from django.forms import ModelForm, Textarea
+
 
 class QuestionForm(forms.ModelForm):
     class Meta:

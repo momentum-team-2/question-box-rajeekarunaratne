@@ -9,18 +9,20 @@ class Question(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    starred_by = models.ManyToManyField(User, related_name="starred_questions")
+    public = models.BooleanField(default=True)    
+    starred_by = models.ManyToManyField(User, related_name="starred_questions", blank=True)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="answers")
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    starred_by = models.ManyToManyField(User, related_name="starred_answers")
+    starred_by = models.ManyToManyField(User, related_name="starred_answers", blank=True)
+    accepted = models.BooleanField(default=False)
 
 def get_available_questions_for_user(queryset, user):
     if user.is_authenticated:
-        questions = queryset.filter(Q(public=True) | Q(user=user))
+        questions = queryset.filter(Q(public=True) | Q(author=user))
     else:
         questions = queryset.filter(public=True)
     return questions

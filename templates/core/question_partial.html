@@ -19,12 +19,17 @@
     </div>
     {% endif %}
 
-    {% if question.user %}
+    {% if question.author %}
     <div class="flex">
       <div class="pr2"><i class="snip"></i></div>
-      <div>{{ question.user }}</div>
+      <div>{{ question.author }}</div>
     </div>
     {% endif %}
+
+    <!-- <li>
+      <a href="{% url 'show_question' pk=question.pk %}">{{ question.title }}</a> (by {{ question.user }}) {% if not question.public %}<b>private</b>{% endif %}
+      -- starred {{ question.times_starred }} time{{ question.times_starred|pluralize }}
+    </li> -->
 
     {% if user == question.user %}
     <p>

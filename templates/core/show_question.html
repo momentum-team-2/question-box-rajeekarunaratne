@@ -1,11 +1,15 @@
 {% extends "base.html" %}
+{% load static %}
+{% block scripts %}
+  <script src="{% static 'js/question.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 <br>
 <div class="w-40 pa3 b--green b--dashed">
   <h2>{{ question.title }}
     <a id="toggle-starred" data-question-id="{{ question.pk }}" class="no-underline pointer dib grow">
-      {% if is_user_starred %}
+      {% if user_favorite %}
         &#9733;
       {% else %}
         &#9734;
@@ -34,11 +38,29 @@
   </div>
   {% endif %}
 
-
+  <ul style='list-style-type: none'>
+    {% for answer in answers %}
+    <li>{{ answer.body }}
+    <a data-answer-id="{{ answer.pk }}" class="no-underline pointer dib grow">
+      {% if user.is_starred_answers %}
+        &#9733;
+      {% else %}
+        &#9734;
+      {% endif %}
+      </a>
+    <br>Posted by: {{ answer.author }} </li>
+    <a class="red" href="{% url 'accept_answer' answer_pk=answer.pk %}">Accepted Answer</a>
+    {% if answer.accepted %}
+    <strong>Accepted</strong>
+    {% endif %}
+    {% endfor %}
+    <br><a style="text-decoration:none" class="btn btn-outline-light mt-2 mt2 mb0 f6 fw4 ttu tracked" href="{% url 'add_answer' pk=question.pk%}">add answer</a>
+  </ul>
+</div>
 
   <p>
     <a class="red" href="{% url 'list_questions' %}">Questions List</a><br>
-    {% if user == question.user %}
+    {% if user == question.author %}
     <a class="red" href="{% url 'delete_question' pk=question.pk %}">Delete Question</a>
     {% endif %}
   </p>
@@ -49,7 +71,7 @@
   toggleStarredLink.addEventListener('click', function (e) {
     e.preventDefault()
     const questionId = toggleStarredLink.dataset['questionId']
-    fetch(`/questions/${questionId}/Starred/`, {
+    fetch(`/core/${questionId}/starred/`, {
       method: 'POST'
     })
     .then(res => res.json())
@@ -62,5 +84,29 @@
     })
 
   })
+
+
+  const toggleStarredLinks = document.querySelectorAll("[data-answer-id]")
+  for (i = 0; i < toggleStarredLinks.length; i++) {
+    link = toggleStarredLinks[i];
+    link.addEventListener('click', function (e) {
+      e.preventDefault()
+      let answerId = link.dataset['answerId']
+      console.log(answerId)
+      fetch(`/answers/${answerId}/starred/`, {
+        method: 'POST'
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.starred) {
+          link.innerHTML = '&#9733;'
+        } else {
+          link.innerHTML = '&#9734;'
+        }
+      })
+
+    })
+  }
+
 </script>
 {% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="tc mw7 center mt4">
+    <h2 class="mt2 mb0 f3 fw4 ttu tracked"> 
+        {{ question.title }}
+    </h2>
+    <h3 class="mt2 mb0 fw4 ttu tracked">
+        {{ question.body }}
+    </h3>
+    <div class="mt2 mb0 f6 fw4 ttu tracked">
+        
+        <form action="{% url 'add_answer'  pk=question.pk %}" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+    </div>
+
+    <div class=''>
+        <button class="f6 grow no-underline br-pill ph3 pv2 mb2 dib white bg-dark-pink mt2 mb0 f6 fw4 ttu" type="submit">add answer</button>
+    </div>
+
+        </form>
+</div>
+
+{% endblock %} 

@@ -2,8 +2,13 @@
 
 {% block content %}
 <div class="green">
-    <h1>Profile of {{ user.username }}</h1>
+    <h1>{{ user.username }}'s Profile</h1>
 </div>
+
+<form action="/core/search">
+    <input placeholder="find question" type="text" name="q">
+    <input type="submit" value="Search">
+  </form>
 
 <br>
 
