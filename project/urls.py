@@ -36,11 +36,6 @@ urlpatterns = [
 ]
 
 
-urlpatterns += [
-    path('qbox/', views.question_list),
-    path('qbox/<int:pk>/', views.question_detail),
-]
-
 
 if settings.DEBUG:
     import debug_toolbar
