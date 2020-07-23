@@ -65,6 +65,7 @@
 </div>
 
   <p>
+    <p><a href="{% url 'profile' %}">Profile Page</a></p>
     <a class="red" href="{% url 'list_questions' %}">Questions List</a><br>
     {% if user == question.author %}
     <a class="red" href="{% url 'delete_question' pk=question.pk %}">Delete Question</a>

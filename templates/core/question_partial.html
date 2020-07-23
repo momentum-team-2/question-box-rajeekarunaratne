@@ -11,18 +11,18 @@
       <div>{{ question.body }}</div>
     </div>
     {% endif %}
-
+    <br>
     {% if question.date_added %}
     <div class="flex">
       <div class="pr2"><i class="snip"></i></div>
-      <div>{{ question.date_added }}</div>
+      <br><div>{{ question.date_added }}</div>
     </div>
     {% endif %}
 
     {% if question.author %}
     <div class="flex">
       <div class="pr2"><i class="snip"></i></div>
-      <div>{{ question.author }}</div>
+      <div>by {{ question.author }}</div>
     </div>
     {% endif %}
 

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'markdownify',
+    'rest_framework',
+    'qbox.apps.QboxConfig',
 
     # Third-party
     'debug_toolbar',

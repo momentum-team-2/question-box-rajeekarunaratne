@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 from core import views as core_views
-
+from qbox import views
 
 urlpatterns = [
     path('', core_views.home, name="home"),
@@ -34,6 +34,13 @@ urlpatterns = [
     path('core/search/', core_views.search_questions, name='search_questions'),
     path('accept_answer/<int:answer_pk>/', core_views.accept_answer, name='accept_answer')
 ]
+
+
+urlpatterns += [
+    path('qbox/', views.question_list),
+    path('qbox/<int:pk>/', views.question_detail),
+]
+
 
 if settings.DEBUG:
     import debug_toolbar
