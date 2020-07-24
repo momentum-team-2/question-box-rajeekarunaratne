@@ -17,7 +17,31 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 from core import views as core_views
-from qbox import views
+from qbox.views import QuestionViewSet, AnswerViewSet
+
+question_list = QuestionViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
+question_detail = QuestionViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
+
+answer_list = AnswerViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
+answer_detail = AnswerViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
 
 urlpatterns = [
     path('', core_views.home, name="home"),
@@ -32,9 +56,22 @@ urlpatterns = [
     path('core/<int:question_pk>/starred/', core_views.toggle_starred_questions, name='toggle_starred_questions'),
     path('answers/<int:answer_pk>/starred/', core_views.toggle_starred_answers, name='toggle_starred_answers'),
     path('core/search/', core_views.search_questions, name='search_questions'),
-    path('accept_answer/<int:answer_pk>/', core_views.accept_answer, name='accept_answer')
+    path('accept_answer/<int:answer_pk>/', core_views.accept_answer, name='accept_answer'),
+    path('api/questions/', question_list),
+    path('api/questions/<int:pk>/', question_detail),
+    path('api/answers/', answer_list),
+    path('api/answers/<int:pk>/', answer_detail),
 ]
 
+# urlpatterns += [
+#     path('qbox/', views.QuestionViewSet.as_view({'get': 'list'})),
+#     # path('qbox/', views.AnswerViewSet),
+# ]
+
+question_list = QuestionViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
 
 
 if settings.DEBUG:

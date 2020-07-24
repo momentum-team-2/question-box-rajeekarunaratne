@@ -20,7 +20,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(author=self.request.user)
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -31,12 +31,12 @@ class AnswerViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(author=self.request.user)
 
 
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
